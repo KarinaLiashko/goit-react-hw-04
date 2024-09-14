@@ -1,0 +1,32 @@
+.form {
+    padding: 20px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.header {
+    background-color: #4169e1;
+}
+
+.field {
+    padding: 10px;
+    border: 1px transparent;
+    border-radius: 15px;
+    margin-right: 5px;
+    position: relative;
+}
+
+.btn {
+    padding: 15px;
+    border: 1px transparent;
+    border-radius: 15px;
+}
+
+.error {
+    position: absolute;
+    top: 70px;
+    left: 590px;
+    color: #ff1a1a;
+    font-weight: 700;
+}
