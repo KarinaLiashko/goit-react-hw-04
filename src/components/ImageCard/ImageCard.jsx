@@ -1,10 +1,15 @@
-import css from "./ImageCard.module.css";
+import styles from "./ImageCard.module.css";
 
-export default function ImageCard({ photos, altInfo, click }) {
+export default function ImageCard({ imageSrc, altInfo, onClick }) {
   return (
     <>
       <div>
-        <img src={photos} alt={altInfo} className={css.img} onClick={click} />
+        <img
+          src={imageSrc}
+          alt={altInfo}
+          className={styles.img}
+          onClick={onClick}
+        />
       </div>
     </>
   );

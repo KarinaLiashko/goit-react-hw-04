@@ -5,7 +5,6 @@ import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
-import toast, { Toaster } from "react-hot-toast";
 import { fetchedPhotos } from "./image-api";
 import "./App.css";
 
@@ -20,28 +19,28 @@ export default function App() {
   const [maxPages, setMaxPages] = useState();
 
   useEffect(() => {
-    if (topic === "") {
-      return;
-    }
+    if (topic === "") return; // Only fetch data if there is a valid topic
 
     async function getPhoto() {
       try {
         setLoading(true);
         setError(false);
+
         const res = await fetchedPhotos(topic, page);
-        setPhotos(prevImage => [...prevImage, ...res.images]);
-        setMaxPages(res.totalPages);
-        if (page > 1) {
-          smoothScroll();
-        }
-      } catch (error) {
-        setError(true);
-        toast.dismiss();
-        toast.error("You have a bad request", { duration: 1500 });
+
+        const newImages = Array.isArray(res.images) ? res.images : [];
+
+        setPhotos(prevImage => [...prevImage, ...newImages]);
+        setMaxPages(res.totalPages || 1);
+        if (page > 1) smoothScroll();
+      } catch (err) {
+        console.error("API fetch error: ", err);
+        setError("You have a bad request");
       } finally {
         setLoading(false);
       }
     }
+
     getPhoto();
   }, [topic, page]);
 
@@ -52,7 +51,7 @@ export default function App() {
   };
 
   const handleLoadMore = () => {
-    setPage(page + 1);
+    if (page < maxPages) setPage(page + 1);
   };
 
   const openModal = imageUrl => {
@@ -76,7 +75,6 @@ export default function App() {
     <>
       <div>
         <SearchBar onSubmit={handleSearch} />
-        <Toaster />
 
         {photos.length > 0 && (
           <ImageGallery photos={photos} onImageClick={openModal} />

@@ -7,3 +7,8 @@
     background-color: #4169e1;
     color: aliceblue;
 }
+
+.button:hover {
+    background-color: #1e06d7;
+
+}

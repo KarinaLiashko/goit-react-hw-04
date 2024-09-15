@@ -1,21 +1,20 @@
 import styles from "./ImageGallery.module.css";
 import ImageCard from "../ImageCard/ImageCard";
 
-export default function ImageGallery({ photos, onImageClick }) {
+const ImageGallery = ({ photos, onImageClick }) => {
   return (
     <ul className={styles.ul}>
-      {photos.map(item => {
-        return (
-          <li className={styles.li} key={item.id}>
-            <ImageCard
-              photos={item.urls.small}
-              altInfo={item.alt_description}
-              onClick={() => onImageClick(item.urls.regular)}
-              click={() => onImageClick(item.urls.regular)}
-            />
-          </li>
-        );
-      })}
+      {photos.map((item, index) => (
+        <li className={styles.li} key={`${item.id}-${index}`}>
+          <ImageCard
+            imageSrc={item.urls.small}
+            altInfo={item.alt_description}
+            onClick={() => onImageClick(item.urls.regular)}
+          />
+        </li>
+      ))}
     </ul>
   );
-}
+};
+
+export default ImageGallery;
